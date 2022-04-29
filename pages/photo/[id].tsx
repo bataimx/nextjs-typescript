@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router';
 import React from 'react';
 import { useSelector } from 'react-redux';
-import Image from '../../components/Image';
+import Image from '../../components/image';
 import PageContainer from '../../components/pages/pageContainer';
 import { PhotoModel } from '../../models';
 import { photoByIdSelector } from '../../redux/selectors/PhotoListSelector';

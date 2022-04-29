@@ -7,7 +7,7 @@ import Box from '@mui/material/Box';
 import { CollectionModel, PhotoModel } from '../../models';
 import DeleteIcon from '@mui/icons-material/Delete';
 import Button from '@mui/material/Button';
-import ImagesList from '../ImagesList';
+import ImagesList from '../imagesList';
 import { removeCollectionsAsync } from '../../redux/actions';
 import { useRouter } from 'next/router';
 
