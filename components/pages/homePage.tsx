@@ -1,19 +1,18 @@
 import React from 'react';
-// import { useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import ImagesList from '../imagesList';
 import PageContainer from './pageContainer';
-// import { PhotoModel } from '../models';
-// import { photoListSelector } from '../redux/selectors/PhotoListSelector';
-// import PhotoDialog from '../components/PhotoDialog';
+import { PhotoModel } from '../../models';
+import { photoListSelector } from '../../redux/selectors/PhotoListSelector';
+import PhotoDialog from '../PhotoDialog';
 
 export default (): React.ReactElement => {
-  // const photoList = useSelector<PhotoModel[]>(photoListSelector);
+  const photoList = useSelector<any, PhotoModel[]>(photoListSelector);
 
   return (
     <PageContainer>
-      <ImagesList data={[]} />
-      {/* <PhotoDialog /> */}
-      <h1>here</h1>
+      <ImagesList data={photoList} />
+      <PhotoDialog />
     </PageContainer>
   );
 };

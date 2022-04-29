@@ -3,15 +3,15 @@ import { useDispatch } from 'react-redux';
 import ImageList from '@mui/material/ImageList';
 import ImageListItem from '@mui/material/ImageListItem';
 import ImageListItemBar from '@mui/material/ImageListItemBar';
-// import { useNavigate } from 'react-router-dom';
 import { PhotoModel } from '../../models';
-// import { removePhotosAsync } from '../../redux/actions';
-// import MenuList from '../MenuList';
+import { removePhotosAsync } from '../../redux/actions';
+import MenuList from '../MenuList';
 import DeleteIcon from '@mui/icons-material/Delete';
 import AddIcon from '@mui/icons-material/Add';
-// import CollectionsDialog from '../CollectionsDialog';
+import CollectionsDialog from '../CollectionsDialog';
 import IconButton from '@mui/material/IconButton';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
+import { useRouter } from 'next/router';
 
 interface DialogModel {
   collection: boolean;
@@ -26,7 +26,7 @@ interface ImageListInterface {
 export default ({ data = [] }: ImageListInterface): React.ReactElement => {
   const dispatch = useDispatch();
   const itemData = data as PhotoModel[];
-  let navigate = useNavigate();
+  const router = useRouter();
   const [dialogState, setDialogState] = useState<DialogModel>({
     collection: false,
     menuAnchorEl: null,
@@ -56,11 +56,11 @@ export default ({ data = [] }: ImageListInterface): React.ReactElement => {
   }, []);
 
   const handleOnClick = useCallback((title: string) => {
-    navigate(`/photo/${title}`);
+    router.push(`/photo/${title}`);
   }, []);
 
   const handleRemovePhoto = useCallback((photo: PhotoModel) => {
-    // dispatch(removePhotosAsync([photo]));
+    dispatch(removePhotosAsync([photo]));
   }, []);
 
   const handleCloseCollectionDialog = useCallback(() => {
@@ -130,7 +130,7 @@ export default ({ data = [] }: ImageListInterface): React.ReactElement => {
           </ImageListItem>
         ))}
       </ImageList>
-      {/* <MenuList
+      <MenuList
         menuAnchorEl={dialogState.menuAnchorEl}
         onClose={handleCloseMenu}
         menuData={menuData}
@@ -139,7 +139,7 @@ export default ({ data = [] }: ImageListInterface): React.ReactElement => {
         photo={dialogState.selectedItem}
         open={dialogState.collection}
         onClose={handleCloseCollectionDialog}
-      /> */}
+      />
     </div>
   );
 };

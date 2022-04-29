@@ -2,19 +2,20 @@ import { Card, CardContent, CardMedia, Typography } from '@mui/material';
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { PhotoModel } from '../../models';
-// import { collectionsByIdsSelector } from '../../redux/selectors/CollectionsSelector';
+import { collectionsByIdsSelector } from '../../redux/selectors/CollectionsSelector';
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
+import Link from 'next/link';
 
 interface ImageInterface {
   data: PhotoModel;
 }
 
-export default image({ data }: ImageInterface): React.ReactElement => {
+export default ({ data }: ImageInterface): React.ReactElement => {
   const collectionIds = (data && data.collections) ?? [];
-  // const selectedCollections = useSelector(
-  //   collectionsByIdsSelector(collectionIds)
-  // );
+  const selectedCollections = useSelector(
+    collectionsByIdsSelector(collectionIds)
+  );
 
   return (
     <Card>
@@ -27,15 +28,17 @@ export default image({ data }: ImageInterface): React.ReactElement => {
       <CardContent>
         <Stack direction={{ xs: 'row' }} spacing={{ xs: 1 }}>
           {selectedCollections.map((item, idx) => (
-            <Button
-              component={Link}
-              to={`/collection/${item.id}`}
+            <Link
+              href={`/collection/${item.id}`}
               key={idx}
-              size="small"
-              variant="outlined"
             >
-              {item.name}
-            </Button>
+              <Button
+                size="small"
+                variant="outlined"
+              >
+                {item.name}
+              </Button>
+            </Link>
           ))}
         </Stack>
         <Typography gutterBottom variant="h5" component="div">

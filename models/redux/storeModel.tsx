@@ -1,6 +1,5 @@
-import SettingModel from './reducers/settingModel';
-import CollectionModel from './reducers/collectionModel';
-import PhotoModel from './reducers/photoModel';
+import { SettingModel } from '..';
+import PhotoModel from './reducers/PhotoModel';
 
 class StoreModel {
   Setting: SettingModel;
