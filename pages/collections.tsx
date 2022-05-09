@@ -1,5 +1,5 @@
 import React from 'react';
-import PageContainer from '../components/pages/pageContainer';
+import PageContainer from '../components/pageContainer';
 import CollectionsTabs from '../components/CollectionsTabs';
 import AddCollectionDialog from '../components/AddCollectionDialog';
 import { collectionsSelector } from '../redux/selectors/CollectionsSelector';

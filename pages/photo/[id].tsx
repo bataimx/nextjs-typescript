@@ -2,7 +2,7 @@ import { useRouter } from 'next/router';
 import React from 'react';
 import { useSelector } from 'react-redux';
 import Image from '../../components/image';
-import PageContainer from '../../components/pages/pageContainer';
+import PageContainer from '../../components/pageContainer';
 import { PhotoModel } from '../../models';
 import { photoByIdSelector } from '../../redux/selectors/PhotoListSelector';
 import { isEmpty } from 'lodash';
@@ -12,7 +12,9 @@ function PhotoPage(): React.ReactElement {
   const {
     query: { id: photoId },
   } = useRouter();
-  const photoData = useSelector(photoByIdSelector(photoId as string)) as PhotoModel;
+  const photoData = useSelector(
+    photoByIdSelector(photoId as string)
+  ) as PhotoModel;
 
   return (
     <div>
@@ -27,4 +29,3 @@ function PhotoPage(): React.ReactElement {
   );
 }
 export default PhotoPage;
-
