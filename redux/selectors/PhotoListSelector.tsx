@@ -1,6 +1,8 @@
 import { StoreModel, PhotoModel } from '../../models';
 
-const photoListSelector = (state: StoreModel): PhotoModel[] => state.Photos;
+const photoListSelector = (state: StoreModel): PhotoModel[] => {
+  return state.Photos;
+};
 const photoByIdSelector = (photoId: string) => {
   return (state: StoreModel) => {
     if (!photoId) return {};

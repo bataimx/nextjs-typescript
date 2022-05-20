@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+// import { useDispatch } from 'react-redux';
 import { getAppDataAsync } from '../../redux/actions';
 import { Box, Container } from '@mui/material';
 import Header from '../Header';
@@ -9,11 +9,11 @@ interface PageContainerInterface {
   children?: React.ReactNode;
 }
 export default ({ children }: PageContainerInterface): React.ReactElement => {
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
 
-  useEffect(() => {
-    dispatch(getAppDataAsync());
-  }, []);
+  // useEffect(() => {
+  //   dispatch(getAppDataAsync());
+  // }, []);
   
   return (
     <div>

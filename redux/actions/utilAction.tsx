@@ -1,18 +1,27 @@
 import { takeLatest } from 'redux-saga/effects';
 import {
-  ActionCreatorWithOptionalPayload,
-  createAction,
+  ActionCreatorWithNonInferrablePayload,
+  ActionCreatorWithPayload,
+  createAction
 } from '@reduxjs/toolkit';
+import { IsAny, IsUnknown } from '@reduxjs/toolkit/dist/tsHelpers';
+import ActionModel from '../../models/redux/ActionModel';
 
-interface ActionSaga<T> extends ActionCreatorWithOptionalPayload<T, string> {
-  saga: Generator | any;
+type sagaGenerator<T> = (action: ActionModel<T>) => Generator<any, void, T>
+
+interface ActionCreatorWithPayloadExtends<T, Y extends string> extends ActionCreatorWithPayload<T, Y> {
+  saga?: sagaGenerator<T>;
 }
+interface ActionCreatorWithNonInferrablePayloadExtends<T extends string> extends ActionCreatorWithNonInferrablePayload<T> {
+  saga?: sagaGenerator<T>;
+}
+type ActionSaga<T> = IsAny<T, ActionCreatorWithPayloadExtends<any, string>, IsUnknown<T, ActionCreatorWithNonInferrablePayloadExtends<string>, any>>
 
 export function createActionSaga<T>(
   actionName: string,
-  actionSaga: Generator | any
+  actionSaga: sagaGenerator<T>
 ) {
-  const newAction = createAction<T>(actionName) as ActionSaga<T>;
+  const newAction: ActionSaga<T> = createAction<T, string>(actionName);
   newAction.saga = actionSaga;
   return newAction;
 }

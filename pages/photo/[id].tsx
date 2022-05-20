@@ -1,4 +1,3 @@
-import { useRouter } from 'next/router';
 import React from 'react';
 import { useSelector } from 'react-redux';
 import Image from '../../components/image';
@@ -7,11 +6,11 @@ import { PhotoModel } from '../../models';
 import { photoByIdSelector } from '../../redux/selectors/PhotoListSelector';
 import { isEmpty } from 'lodash';
 import Head from 'next/head';
+import { GetCollections, GetPhotos } from '../../Apis';
+import { wrapper } from '../../redux/store';
 
-function PhotoPage(): React.ReactElement {
-  const {
-    query: { id: photoId },
-  } = useRouter();
+function PhotoPage({id}): React.ReactElement {
+  const photoId = id;
   const photoData = useSelector(
     photoByIdSelector(photoId as string)
   ) as PhotoModel;
@@ -28,4 +27,34 @@ function PhotoPage(): React.ReactElement {
     </div>
   );
 }
+export async function getStaticPaths() {
+  const Collections = await GetPhotos(null)
+  return {
+    paths: Collections.map(item => {
+      return { params: { id: item.id } };
+    }),
+    fallback: true
+  }
+}
+
+export const getStaticProps = wrapper.getStaticProps(store => async ({params}) => {
+  const Collections = await GetCollections(null);
+  const Photos = await GetPhotos(null);
+
+  await store.dispatch({
+    type: "SERVER_UPDATE_STORE",
+    payload: {
+      Collections,
+      Photos
+    }
+  });
+
+  return {
+    props: {
+      id: params.id
+    },
+  };
+});
+
+
 export default PhotoPage;

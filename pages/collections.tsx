@@ -5,16 +5,14 @@ import AddCollectionDialog from '../components/AddCollectionDialog';
 import { collectionsSelector } from '../redux/selectors/CollectionsSelector';
 import { photosByCollectionIdSelector } from '../redux/selectors/PhotoListSelector';
 import { useSelector } from 'react-redux';
-import { useRouter } from 'next/router';
 import Head from 'next/head';
+import { wrapper } from '../redux/store';
+import { GetCollections, GetPhotos } from '../Apis';
 
-export default (): React.ReactElement => {
+export default ({ id }): React.ReactElement => {
   const collections = useSelector(collectionsSelector);
-  const {
-    query: { id: collectionId },
-  } = useRouter();
-  const currentVal = collectionId || (collections[0] && collections[0].id) || 0;
-  const photos = useSelector(photosByCollectionIdSelector(currentVal));
+  const collectionId = id;
+  const photos = useSelector(photosByCollectionIdSelector(collectionId));
 
   return (
     <div>
@@ -25,7 +23,7 @@ export default (): React.ReactElement => {
         <h1>Collections!</h1>
         {collections.length > 0 && (
           <CollectionsTabs
-            value={currentVal}
+            value={collectionId}
             collections={collections}
             photos={photos}
           />
@@ -35,3 +33,23 @@ export default (): React.ReactElement => {
     </div>
   );
 };
+
+export const getStaticProps = wrapper.getStaticProps(store => async () => {
+  const Collections = await GetCollections(null);
+  const Photos = await GetPhotos(null);
+
+  await store.dispatch({
+    type: "SERVER_UPDATE_STORE",
+    payload: {
+      Collections,
+      Photos
+    }
+  });
+
+  return {
+    props: {
+      id: (Collections[0] && Collections[0].id) || 0
+    },
+  };
+});
+

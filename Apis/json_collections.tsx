@@ -1,21 +1,15 @@
-const storageName = 'json_collections';
-let JsonCollections = [];
+import { CollectionModel } from '../models';
+
+// const storageName = 'json_collections';
+let JsonCollections: CollectionModel[] = [];
 
 export function GetJsonCollections() {
-  if (JsonCollections.length === 0) {
-    const jsonStringify = localStorage.getItem(storageName);
-    if (!jsonStringify) {
-      localStorage.setItem(storageName, JSON.stringify(dummyCollections));
-      JsonCollections = dummyCollections;
-      return JsonCollections;
-    }
-    JsonCollections = JSON.parse(jsonStringify);
-  }
+  JsonCollections = dummyCollections;
   return JsonCollections;
 }
 
 export function updateJsonCollections() {
-  localStorage.setItem(storageName, JSON.stringify(JsonCollections));
+  // localStorage.setItem(storageName, JSON.stringify(JsonCollections));
 }
 
 const dummyCollections = [

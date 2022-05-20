@@ -6,6 +6,8 @@ import PageContainer from '../components/pageContainer';
 import { PhotoModel } from '../models';
 import { photoListSelector } from '../redux/selectors/PhotoListSelector';
 import PhotoDialog from '../components/PhotoDialog';
+import { wrapper } from '../redux/store';
+import { GetCollections, GetPhotos } from '../Apis';
 
 export default function Home() {
   const photoList = useSelector<any, PhotoModel[]>(photoListSelector);
@@ -16,7 +18,6 @@ export default function Home() {
         <title>Photo Blog</title>
       </Head>
       <main className={styles.main}>
-        <h3>Welcome to Next.js!</h3>
         <PageContainer>
           <ImagesList data={photoList} />
           <PhotoDialog />
@@ -25,3 +26,22 @@ export default function Home() {
     </div>
   );
 }
+
+export const getServerSideProps = wrapper.getServerSideProps(store => async () => {
+  const Photos = await GetPhotos(null);
+  const Collections = await GetCollections(null);
+
+  await store.dispatch({
+    type: "SERVER_UPDATE_STORE",
+    payload: {
+      Photos,
+      Collections
+    }
+  });
+
+  console.log('State on server', store.getState());
+
+  return {
+    props: {},
+  };
+});

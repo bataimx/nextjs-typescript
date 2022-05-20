@@ -8,7 +8,7 @@ export const getPhotosAsync = createAction<PhotoModel[]>(
   'PhotoList/GetPhotosAsync'
 );
 export const addPhotos = createAction<PhotoModel[]>('PhotoList/AddPhotos');
-export const clearPhotos = createAction<PhotoModel[]>('PhotoList/ClearPhotos');
+export const clearPhotos = createAction('PhotoList/ClearPhotos');
 export const addPhotoAsync = createAction<PhotoModel[]>(
   'PhotoList/AddPhotoAsync'
 );
@@ -25,7 +25,7 @@ export const updatePhoto = createAction<PhotoModel>('PhotoList/UpdatePhoto');
 
 function* getPhotosSaga(action: ActionModel<any>) {
   yield put(StartLoading());
-  const response = yield call(GetPhotos, action.payload);
+  const response: PhotoModel[] = yield call<any>(GetPhotos, action.payload);
   yield put(clearPhotos());
   yield put(addPhotos(response));
   yield put(StopLoading());
@@ -33,21 +33,21 @@ function* getPhotosSaga(action: ActionModel<any>) {
 
 function* addPhotoSaga(action: ActionModel<PhotoModel>) {
   yield put(StartLoading());
-  const response = yield call(AddPhoto, action.payload);
+  const response: PhotoModel[] = yield call<any>(AddPhoto, action.payload);
   yield put(addPhotos(response));
   yield put(StopLoading());
 }
 
 function* removePhotosSaga(action: ActionModel<PhotoModel[]>) {
   yield put(StartLoading());
-  const response = yield call(RemovePhotos, action.payload);
+  const response: PhotoModel[] = yield call<any>(RemovePhotos, action.payload);
   yield put(removePhotos(response));
   yield put(StopLoading());
 }
 
 function* updatePhotoSaga(action: ActionModel<PhotoModel>) {
   yield put(StartLoading());
-  const response = yield call(PatchPhoto, action.payload);
+  const response: PhotoModel = yield call<any>(PatchPhoto, action.payload);
   yield put(updatePhoto(response));
   yield put(StopLoading());
 }

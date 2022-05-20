@@ -17,20 +17,18 @@ export const getAppDataAsync = createAction<undefined>(
 
 function* getAppDataSaga(action: ActionModel<any>) {
   yield put(StartLoading());
-
   // PhotoJson
-  const jsonPhoto: PhotoModel = yield call(GetPhotos, action.payload);
+  const jsonPhoto: PhotoModel[] = yield call<any>(GetPhotos, action.payload);
   yield put(clearPhotos());
   yield put(addPhotos(jsonPhoto));
 
   // CollectionJson
-  const jsonCollection: CollectionModel = yield call(
+  const jsonCollection: CollectionModel[] = yield call<any>(
     GetCollections,
     action.payload
   );
   yield put(clearCollections());
   yield put(addCollections(jsonCollection));
-
   yield put(StopLoading());
 }
 

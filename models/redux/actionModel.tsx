@@ -1,5 +1,7 @@
+import {ActionTypes} from '../../redux/actions'
+
 interface ActionModel<type> {
-  type: ActionType;
+  type: ActionTypes | String;
   payload: type;
 }
 

@@ -1,26 +1,20 @@
-const storageName = 'json_photo';
-let JsonPhoto = [];
+import PhotoModel from "models/redux/reducers/PhotoModel";
+
+// const storageName = 'json_photo';
+let JsonPhoto: PhotoModel[] = [];
 
 export function GetJsonPhoto() {
-  if (JsonPhoto.length === 0) {
-    const jsonStringify = localStorage.getItem(storageName);
-    if (!jsonStringify) {
-      localStorage.setItem(storageName, JSON.stringify(dummyJson));
-      JsonPhoto = dummyJson;
-      return JsonPhoto;
-    }
-    JsonPhoto = JSON.parse(jsonStringify);
-  }
+  JsonPhoto = dummyJson;
   return JsonPhoto;
 }
 
-export function updatePhoto(photo) {
+export function updatePhoto(photo: PhotoModel) {
   JsonPhoto = JsonPhoto.map((item) => (item.id === photo.id ? photo : item));
   updateJsonPhoto();
 }
 
 export function updateJsonPhoto() {
-  localStorage.setItem(storageName, JSON.stringify(JsonPhoto));
+  // localStorage.setItem(storageName, JSON.stringify(JsonPhoto));
 }
 
 const dummyJson = [

@@ -20,7 +20,7 @@ export const getCollectionsAsync = createActionSaga<CollectionModel[]>(
   function* (action: ActionModel<any>) {
     yield put(StartLoading());
 
-    const response = yield call(GetCollections, action.payload);
+    const response: CollectionModel[] = yield call<any>(GetCollections, action.payload);
     yield put(clearCollections());
     yield put(addCollections(response));
 
@@ -33,19 +33,21 @@ export const removeCollectionsAsync = createActionSaga<CollectionModel[]>(
   function* (action: ActionModel<CollectionModel[]>) {
     yield put(StartLoading());
 
-    const response = yield call(RemoveCollections, action.payload);
+    const response: CollectionModel[] = yield call<any>(RemoveCollections, action.payload);
     yield put(removeCollections(response));
 
     yield put(StopLoading());
   }
 );
+// T = PutEffect<{ payload: undefined; type: string; }> | CallEffect<unknown> | PutEffect<{payload: CollectionModel[];type: string; }>
+// Generator<T, void, CollectionModel[]>
 
 export const addCollectionsAsync = createActionSaga<CollectionModel[]>(
   'Collections/AddCollectionsAsync',
   function* (action: ActionModel<CollectionModel[]>) {
     yield put(StartLoading());
 
-    const response = yield call(AddCollections, action.payload);
+    const response: CollectionModel[] = yield call<any>(AddCollections, action.payload);
     yield put(addCollections(response));
 
     yield put(StopLoading());
